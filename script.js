@@ -55,6 +55,16 @@
                         // Get file label for preview positioning
                         const fileLabel = fileUploadDiv.querySelector('.file-label');
                         
+                        // Change background gradient for successful upload
+                        fileLabel.style.background = 'linear-gradient(to right, #34a853, #4285f4)';
+                        
+                        // Change icon to checkmark for all file uploads
+                        const icon = fileUploadDiv.querySelector('.file-label i');
+                        if (icon) {
+                            icon.className = '';
+                            icon.classList.add('fas', 'fa-check');
+                        }
+                        
                         // Check file type and create appropriate preview
                         if (file.type.startsWith('image/')) {
                             // For image files, create an image preview
@@ -79,12 +89,7 @@
                             pdfPreview.appendChild(pdfIcon);
                             fileLabel.appendChild(pdfPreview);
                         } else {
-                            // For other files, show a generic file icon
-                            const icon = fileUploadDiv.querySelector('.file-label i');
-                            if (icon) {
-                                icon.className = '';
-                                icon.classList.add('fas', 'fa-file');
-                            }
+                            // For other files, just keep the checkmark icon (already set above)
                         }
                     } else {
                         if (fileNameDisplay) {
@@ -453,6 +458,13 @@
                                             preview.remove();
                                         }
                                         
+                                        // Reset background gradient
+                                        const fileLabel = upload.querySelector('.file-label');
+                                        if (fileLabel) {
+                                            fileLabel.style.background = 'linear-gradient(to right, #0844ff, #4d86f9)';
+                                        }
+                                        
+                                        // Reset to plus icon
                                         const icon = upload.querySelector('.file-label i');
                                         if (icon) {
                                             icon.className = '';
