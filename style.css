@@ -1,0 +1,869 @@
+/* Form Specific CSS */
+/* Font Definitions */
+@font-face {
+    font-family: 'reg';
+    src: url('./fonts/Product\ Sans\ Regular.woff2');
+}
+
+@font-face {
+    font-family: 'bold';
+    src: url('./fonts/Product\ Sans\ Bold.woff2');
+}
+
+@font-face {
+    font-family: 'thin';
+    src: url('./fonts/ProductSans-Thin.woff2');
+}
+
+#form-container {
+    max-width: 1200px;
+    margin: 3vw auto;
+    padding: 3rem;
+    background-color: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    font-family: reg;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.form-header .logo {
+    width: 80px;
+    margin-bottom: 1rem;
+}
+
+.form-header h1 {
+    font-size: 2.5rem;
+    font-family: bold;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #0844ff, #4d86f9);
+    background-clip: text;
+    color: transparent;
+}
+
+.form-header p {
+    color: #5f6368;
+    font-size: 1rem;
+    font-family: thin;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.form-section {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.form-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-family: bold;
+    color: #4285f4;
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.input-field {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.input-field label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-family: reg;
+    color: #5f6368;
+    font-size: 0.95rem;
+}
+
+.input-field input,
+.input-field select,
+.input-field textarea {
+    width: 100%;
+    height: 3.2rem;
+    padding: 0.8rem 1.2rem;
+    border: 1px solid #dadce0;
+    border-radius: 0.8rem;
+    font-family: reg;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    box-sizing: border-box;
+}
+
+.input-field textarea {
+    height: auto;
+    min-height: 6rem;
+}
+
+.input-field input:focus,
+.input-field select:focus,
+.input-field textarea:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+    background-color: #fff;
+    transition: all 0.2s ease-in-out;
+    transform: translateY(-1px);
+}
+
+.required {
+    color: #ea4335;
+}
+
+/* English Service Dropdown Styling */
+#english-service {
+    background-color: #f8f9fa;
+    border-color: #dadce0;
+    transition: all 0.3s ease;
+}
+
+#english-service option[value="required"] {
+    background-color: #f8d7da;
+}
+
+#english-service option[value="preferred"] {
+    background-color: #fff3cd;
+}
+
+#english-service option[value="optional"] {
+    background-color: #d1e7dd;
+}
+
+/* Full Width Elements */
+.full-width {
+    grid-column: span 2;
+}
+
+/* Document Upload Section Enhancement */
+.form-section.full-width h2 {
+    font-size: 1.7rem;
+    margin-bottom: 1.8rem;
+    text-align: center;
+    letter-spacing: 0.015em;
+}
+
+/* File Uploads */
+.upload-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.upload-field {
+    margin-bottom: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid #e6e6e6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.upload-field:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+    border-color: #d0d0d0;
+}
+
+.upload-field label:first-child {
+    font-family: bold;
+    font-size: 1rem;
+    color: #4285f4;
+    margin-bottom: 1rem;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.file-upload {
+    position: relative;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.file-upload input[type="file"] {
+    position: absolute;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    -webkit-appearance: none;
+    appearance: none;
+    z-index: -1;
+    /* Ensure proper behavior on iOS */
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+
+.file-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    background: linear-gradient(to right, #0844ff, #4d86f9);
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 1; /* Ensure it's above the input */
+}
+
+.file-label::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.file-label:hover {
+    background: linear-gradient(to right, #0033cc, #3771fc);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+.file-label:hover::after {
+    opacity: 1;
+}
+
+.file-label i {
+    font-size: 2rem;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    position: relative;
+    z-index: 3; /* Ensure the icon is above previews when visible */
+}
+
+.file-name {
+    color: #5f6368;
+    font-size: 0.9rem;
+    font-family: reg;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80%;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #ffffff;
+    border: 1px dashed #dadce0;
+    transition: all 0.3s ease;
+}
+
+/* Styles for when a file is selected */
+.file-upload.has-file .file-label {
+    background: linear-gradient(to right, #34a853, #4285f4);
+    box-shadow: 0 4px 10px rgba(52, 168, 83, 0.3);
+    overflow: hidden;
+}
+
+.file-upload.has-file .file-name {
+    background-color: #f0f8ff;
+    border: 1px solid #4285f4;
+    color: #4285f4;
+    font-family: bold;
+}
+
+/* File preview styles */
+.file-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 2;
+    border-radius: 50%;
+}
+
+.file-preview-pdf {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    background: linear-gradient(to right, #E53935, #e85642);
+}
+
+/* PDF icon style */
+.pdf-icon {
+    font-size: 1.5rem;
+}
+
+/* Visual animation for file selection */
+@keyframes file-selected-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(66, 133, 244, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0); }
+}
+
+.file-upload.has-file .file-label {
+    animation: file-selected-pulse 1.5s;
+}
+
+/* File upload styling */
+
+/* Form Footer */
+.form-footer {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.submit-btn {
+    padding: 1rem 3rem;
+    background: linear-gradient(to right, #0844ff, #4d86f9);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(to right, #0033cc, #3771fc);
+}
+
+.submit-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Submit button loading state */
+.submit-btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.submit-btn.loading:after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    right: 1.5rem;
+    margin-top: -10px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s infinite linear;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Form message feedback */
+.form-message {
+    text-align: center;
+    margin: 1rem 0;
+    padding: 0.8rem;
+    border-radius: 0.8rem;
+    font-family: reg;
+    transition: all 0.3s ease;
+    display: none;
+    animation: fadeInUp 0.5s ease;
+}
+
+.form-message.success {
+    background-color: rgba(52, 168, 83, 0.1);
+    border: 1px solid rgba(52, 168, 83, 0.3);
+    color: #34a853;
+    display: block;
+}
+
+.form-message.error {
+    background-color: rgba(234, 67, 53, 0.1);
+    border: 1px solid rgba(234, 67, 53, 0.3);
+    color: #ea4335;
+    display: block;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Shake animation for validation errors */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.input-field.shake,
+.upload-field.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Success overlay styling */
+.success-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.97);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    border-radius: 1.5rem;
+    animation: fadeIn 0.5s ease;
+    cursor: pointer;
+}
+
+.checkmark-container {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(to right, #34a853, #4285f4);
+    box-shadow: 0 6px 20px rgba(52, 168, 83, 0.4);
+    margin-bottom: 2rem;
+}
+
+.checkmark {
+    color: white;
+    font-size: 3rem;
+    animation: checkmark-appear 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.success-message {
+    text-align: center;
+    max-width: 80%;
+}
+
+.success-message h3 {
+    font-family: bold;
+    font-size: 1.8rem;
+    color: #4285f4;
+    margin-bottom: 0.5rem;
+}
+
+.success-message p {
+    font-family: reg;
+    color: #5f6368;
+    font-size: 1rem;
+}
+
+.tap-instruction {
+    font-family: thin;
+    color: #9aa0a6;
+    position: absolute;
+    bottom: 2rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes checkmark-appear {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+/* Input validation states */
+.input-field.error input,
+.input-field.error select,
+.input-field.error textarea,
+.upload-field.error .file-upload {
+    border-color: #ea4335;
+    background-color: rgba(234, 67, 53, 0.05);
+}
+
+.validation-error {
+    display: none;
+    color: #ea4335;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    font-family: reg;
+    animation: fadeIn 0.3s ease;
+    padding-left: 0.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+
+    .upload-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    #form-container {
+        margin: 2rem;
+        padding: 2rem;
+    }
+    
+    .form-section {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .form-header h1 {
+        font-size: 2rem;
+    }
+
+    .form-section {
+        padding: 1.2rem;
+        margin-bottom: 1.5rem;
+        border-radius: 0.8rem;
+    }
+    
+    .form-section h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    #form-container {
+        margin: 1rem;
+        padding: 1.5rem;
+        border-radius: 1.2rem;
+    }
+    
+    .form-grid {
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .input-field {
+        margin-bottom: 1.2rem;
+    }
+    
+    .input-field input,
+    .input-field select {
+        height: 3rem;
+        padding: 0.7rem 1rem;
+        font-size: 0.95rem;
+    }
+    
+    /* Mobile upload styles */
+    .upload-grid {
+        gap: 1.2rem;
+    }
+    
+    .upload-field {
+        padding: 1.2rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    
+    .upload-field label:first-child {
+        margin-bottom: 1.2rem;
+        font-size: 1rem;
+    }
+    
+    .file-upload {
+        align-items: center;
+        margin-top: 0.5rem;
+    }
+    
+    .file-label {
+        width: 4.8rem;
+        height: 4.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    .file-label i {
+        font-size: 2rem;
+    }
+    
+    .file-name {
+        width: 100%;
+        font-size: 0.85rem;
+        padding: 0.7rem 0.5rem;
+        max-width: 90%;
+        word-break: break-all;
+        border-radius: 0.6rem;
+    }
+    
+    /* Visual indicator for uploads */
+    .file-upload.has-file .file-name {
+        background-color: #f0f8ff;
+        border-color: #4285f4;
+        padding: 0.8rem 0.6rem;
+    }
+    
+    /* Improved tap targets for mobile */
+    .file-upload input[type="file"] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        overflow: hidden;
+        z-index: -1;
+    }
+    
+    /* Improve form message display on mobile */
+    .form-message {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Success overlay adjustments for mobile */
+    .checkmark-container {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .success-message h3 {
+        font-size: 1.5rem;
+    }
+    
+    .success-message p {
+        font-size: 0.9rem;
+    }
+    
+    .tap-instruction {
+        bottom: 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Improved validation error display on mobile */
+    .validation-error {
+        font-size: 0.75rem;
+        margin-top: 0.4rem;
+    }
+    
+    /* Modal and Signature Canvas Styles - Mobile Optimization */
+    .modal {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    #signatureCanvas {
+        width: 100%;
+        height: 180px;
+    }
+    
+    .signature-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .signature-actions button {
+        width: 100%;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 7% auto;
+    width: 600px;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.4s;
+    overflow: hidden;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: linear-gradient(to right, #0844ff, #4d86f9);
+    color: white;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-family: 'bold', sans-serif;
+}
+
+.close-modal {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* Signature Canvas Styles */
+#signatureCanvas {
+    width: 100%;
+    height: 200px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    cursor: crosshair;
+    touch-action: none; /* Prevents scrolling while drawing on mobile */
+    display: block; /* Ensures canvas is properly displayed as a block element */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Center the canvas */
+    position: relative; /* Ensure proper positioning context */
+}
+
+.signature-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.signature-actions button {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-family: 'reg', sans-serif;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid #0844ff;
+    color: #0844ff;
+}
+
+.btn-outline:hover {
+    background-color: rgba(8, 68, 255, 0.1);
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #0844ff, #4d86f9);
+    border: none;
+    color: white;
+    box-shadow: 0 3px 8px rgba(8, 68, 255, 0.3);
+    flex: 1.5;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(8, 68, 255, 0.4);
+}
