@@ -645,80 +645,19 @@
                         
                         // Simulate form submission (replace with actual API call)
                         setTimeout(() => {
-                            // Show success message with completion animation
-                            const formContainer = document.getElementById('form-container');
-                            
-                            // Create success overlay
-                            const successOverlay = document.createElement('div');
-                            successOverlay.className = 'success-overlay';
-                            
-                            const checkmarkContainer = document.createElement('div');
-                            checkmarkContainer.className = 'checkmark-container';
-                            
-                            const checkmark = document.createElement('div');
-                            checkmark.className = 'checkmark';
-                            checkmark.innerHTML = '<i class="fas fa-check"></i>';
-                            
-                            const successMessage = document.createElement('div');
-                            successMessage.className = 'success-message';
-                            successMessage.innerHTML = '<h3>Application Submitted!</h3><p>Thank you for submitting your information. We will review your application shortly.</p>';
-                            
-                            checkmarkContainer.appendChild(checkmark);
-                            successOverlay.appendChild(checkmarkContainer);
-                            successOverlay.appendChild(successMessage);
-                            
-                            formContainer.appendChild(successOverlay);
-                            
                             // Reset button state
                             submitBtn.classList.remove('loading');
                             submitBtn.textContent = 'Submit Application';
                             
-                            // Add delay before allowing form reset
-                            setTimeout(() => {
-                                // Add event listener to reset form when clicking anywhere on the overlay
-                                successOverlay.addEventListener('click', function() {
-                                    // Remove overlay
-                                    successOverlay.remove();
-                                    
-                                    // Reset the form
-                                    form.reset();
-                                    
-                                    // Reset file upload displays
-                                    document.querySelectorAll('.file-upload').forEach(upload => {
-                                        upload.classList.remove('has-file');
-                                        const fileNameDisplay = upload.querySelector('.file-name');
-                                        if (fileNameDisplay) {
-                                            fileNameDisplay.textContent = 'No file chosen';
-                                        }
-                                        
-                                        // Remove any file previews
-                                        const preview = upload.querySelector('.file-preview, .file-preview-pdf');
-                                        if (preview) {
-                                            preview.remove();
-                                        }
-                                        
-                                        // Reset background gradient
-                                        const fileLabel = upload.querySelector('.file-label');
-                                        if (fileLabel) {
-                                            fileLabel.style.background = 'linear-gradient(to right, #0844ff, #4d86f9)';
-                                        }
-                                        
-                                        // Reset to plus icon
-                                        const icon = upload.querySelector('.file-label i');
-                                        if (icon) {
-                                            icon.className = '';
-                                            icon.classList.add('fas', 'fa-plus');
-                                        }
-                                    });
-                                });
-                                
-                                // Add tap/click instructions
-                                const tapInstruction = document.createElement('p');
-                                tapInstruction.className = 'tap-instruction';
-                                tapInstruction.textContent = 'Tap anywhere to continue';
-                                successOverlay.appendChild(tapInstruction);
-                                
-                            }, 2000);
+                            // Hide the form and show success message
+                            const formGrid = document.getElementById('formGrid');
+                            const formFooter = document.querySelector('.form-footer');
+                            
+                            if (formGrid) formGrid.style.display = 'none';
+                            if (formFooter) formFooter.style.display = 'none';
+                            
+                            // Create enhanced success message
+                            createEnhancedSuccessMessage();
                         }, 1500);
                     } else {
                         showFormMessage('Please fill in all required fields correctly.', 'error');
@@ -754,6 +693,33 @@
                             isValid = false;
                         }
                     }
+                    
+                    // Special validation for date of birth (age)
+                    if (input.type === 'date' && input.id === 'dob' && input.value.trim()) {
+                        const birthDate = new Date(input.value);
+                        const today = new Date();
+                        
+                        // Check if the birth date is in the future
+                        if (birthDate > today) {
+                            markAsInvalid(input);
+                            isValid = false;
+                        } else {
+                            // Calculate age in years
+                            let age = today.getFullYear() - birthDate.getFullYear();
+                            const monthDiff = today.getMonth() - birthDate.getMonth();
+                            
+                            // Adjust age if birthday hasn't occurred this year
+                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                                age--;
+                            }
+                            
+                            // Validate age range (16-60 years)
+                            if (age < 16 || age > 60) {
+                                markAsInvalid(input);
+                                isValid = false;
+                            }
+                        }
+                    }
                 });
                 
                 // Check required file uploads
@@ -787,6 +753,27 @@
                         errorMessage = 'Please enter a valid email address';
                     } else if (input.type === 'tel') {
                         errorMessage = 'Please enter a valid phone number';
+                    } else if (input.type === 'date' && input.id === 'dob') {
+                        const birthDate = new Date(input.value);
+                        const today = new Date();
+                        
+                        if (birthDate > today) {
+                            errorMessage = 'Birth date cannot be in the future';
+                        } else {
+                            // Calculate age
+                            let age = today.getFullYear() - birthDate.getFullYear();
+                            const monthDiff = today.getMonth() - birthDate.getMonth();
+                            
+                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                                age--;
+                            }
+                            
+                            if (age < 16) {
+                                errorMessage = 'You must be at least 16 years old to apply';
+                            } else if (age > 60) {
+                                errorMessage = 'You must be 60 years old or younger to apply';
+                            }
+                        }
                     } else if (input.type === 'file') {
                         errorMessage = 'Please upload the required document';
                     }
@@ -844,6 +831,121 @@
             }
         });
 
+        // Function to create enhanced success message
+        function createEnhancedSuccessMessage() {
+            // Remove any existing form message
+            const existingMessage = document.querySelector('.form-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            // Create the success container
+            const successContainer = document.createElement('div');
+            successContainer.className = 'success-container';
+            
+            // Create success icon
+            const successIcon = document.createElement('div');
+            successIcon.className = 'success-icon';
+            successIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            
+            // Create success title
+            const successTitle = document.createElement('h2');
+            successTitle.className = 'success-title';
+            successTitle.textContent = 'Application Submitted Successfully!';
+            
+            // Create success subtitle
+            const successSubtitle = document.createElement('p');
+            successSubtitle.className = 'success-subtitle';
+            successSubtitle.textContent = 'Thank you for submitting your information.';
+            
+            // Create success description
+            const successDescription = document.createElement('p');
+            successDescription.className = 'success-description';
+            successDescription.textContent = 'We will review your application shortly and get back to you with the next steps.';
+            
+            // Create application ID (simulated)
+            const applicationId = document.createElement('div');
+            applicationId.className = 'application-id';
+            const randomId = 'HGN-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            applicationId.innerHTML = `
+                <span class="id-label">Application ID:</span>
+                <span class="id-number">${randomId}</span>
+            `;
+            
+            // Assemble the success message
+            successContainer.appendChild(successIcon);
+            successContainer.appendChild(successTitle);
+            successContainer.appendChild(successSubtitle);
+            successContainer.appendChild(successDescription);
+            successContainer.appendChild(applicationId);
+            
+            // Insert into the form
+            const form = document.getElementById('hgn-form');
+            const formFooter = document.querySelector('.form-footer');
+            if (formFooter) {
+                form.insertBefore(successContainer, formFooter);
+            } else {
+                form.appendChild(successContainer);
+            }
+            
+            // Scroll to the success message
+            successContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Add reset functionality after delay
+            setTimeout(() => {
+                const resetButton = document.createElement('button');
+                resetButton.textContent = 'Submit Another Application';
+                resetButton.className = 'submit-btn reset-btn';
+                
+                resetButton.addEventListener('click', function() {
+                    // Reset the form
+                    form.reset();
+                    
+                    // Show form elements again
+                    const formGrid = document.getElementById('formGrid');
+                    const formFooter = document.querySelector('.form-footer');
+                    if (formGrid) formGrid.style.display = 'block';
+                    if (formFooter) formFooter.style.display = 'block';
+                    
+                    // Remove success message
+                    successContainer.remove();
+                    
+                    // Reset file upload displays
+                    document.querySelectorAll('.file-upload').forEach(upload => {
+                        upload.classList.remove('has-file');
+                        const fileNameDisplay = upload.querySelector('.file-name');
+                        if (fileNameDisplay) {
+                            fileNameDisplay.textContent = 'No file chosen';
+                        }
+                        
+                        // Remove any file previews
+                        const preview = upload.querySelector('.file-preview, .file-preview-pdf');
+                        if (preview) {
+                            preview.remove();
+                        }
+                        
+                        // Reset background gradient
+                        const fileLabel = upload.querySelector('.file-label');
+                        if (fileLabel) {
+                            fileLabel.style.background = 'linear-gradient(to right, #0844ff, #4d86f9)';
+                        }
+                        
+                        // Reset to plus icon
+                        const icon = upload.querySelector('.file-label i');
+                        if (icon) {
+                            icon.className = '';
+                            icon.classList.add('fas', 'fa-plus');
+                        }
+                    });
+                    
+                    // Scroll back to top of form
+                    document.querySelector('.form-header').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+                
+                successContainer.appendChild(resetButton);
+            }, 1000);
+        }
+
 // Email validation function - accessible globally
 function validateEmail(input) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -865,6 +967,59 @@ function validateEmail(input) {
         input.classList.add('has-error');
         if (errorElement) {
             errorElement.textContent = 'Please enter a valid email address';
+            errorElement.classList.add('visible');
+        }
+    }
+}
+
+// Age validation function - accessible globally
+function validateAge(input) {
+    const errorId = input.id + '-error';
+    const errorElement = document.getElementById(errorId);
+    
+    // Remove existing styling
+    input.classList.remove('has-error');
+    if (errorElement) {
+        errorElement.classList.remove('visible');
+    }
+    
+    // If the field is empty, don't show error (will be caught by required attribute)
+    if (!input.value.trim()) return;
+    
+    // Calculate age
+    const birthDate = new Date(input.value);
+    const today = new Date();
+    
+    // Check if the birth date is in the future
+    if (birthDate > today) {
+        input.classList.add('has-error');
+        if (errorElement) {
+            errorElement.textContent = 'Birth date cannot be in the future';
+            errorElement.classList.add('visible');
+        }
+        return;
+    }
+    
+    // Calculate age in years
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    // Adjust age if birthday hasn't occurred this year
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    
+    // Validate age range (16-60 years)
+    if (age < 16) {
+        input.classList.add('has-error');
+        if (errorElement) {
+            errorElement.textContent = 'You must be at least 16 years old to apply';
+            errorElement.classList.add('visible');
+        }
+    } else if (age > 60) {
+        input.classList.add('has-error');
+        if (errorElement) {
+            errorElement.textContent = 'You must be 60 years old or younger to apply';
             errorElement.classList.add('visible');
         }
     }
