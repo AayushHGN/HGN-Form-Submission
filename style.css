@@ -490,6 +490,110 @@
     to { opacity: 1; }
 }
 
+/* Searchable Dropdown Styles */
+.searchable-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.searchable-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid #ddd;
+    border-radius: 0.8rem;
+    font-size: 1rem;
+    font-family: 'reg', sans-serif;
+    background-color: #fff;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+}
+
+.searchable-input:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+    background-color: #fff;
+    transform: translateY(-1px);
+}
+
+.dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 0.8rem 0.8rem;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-options.open {
+    display: block;
+}
+
+.dropdown-option {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-family: 'reg', sans-serif;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.dropdown-option:hover,
+.dropdown-option.active {
+    background-color: #f8f9fa;
+}
+
+.dropdown-option:last-child {
+    border-bottom: none;
+}
+
+.dropdown-option.no-results {
+    color: #666;
+    font-style: italic;
+    cursor: default;
+}
+
+.dropdown-option.no-results:hover {
+    background-color: transparent;
+}
+
+/* Custom scrollbar for dropdown */
+.dropdown-options::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-options::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.dropdown-options::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.dropdown-options::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .dropdown-options {
+        max-height: 150px;
+    }
+    
+    .dropdown-option {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
 /* Form message feedback */
 .form-message {
     text-align: center;

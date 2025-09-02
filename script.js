@@ -95,6 +95,162 @@
             // Call the function to populate countries
             populateCountryDropdowns();
             
+            // Fuzzy Search Dropdown Implementation
+            function createSearchableDropdown(selectElement) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'searchable-dropdown';
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = selectElement.querySelector('option[disabled]')?.textContent || 'Search...';
+                input.className = 'searchable-input';
+                input.setAttribute('autocomplete', 'off');
+                
+                const dropdown = document.createElement('div');
+                dropdown.className = 'dropdown-options';
+                
+                // Store original options
+                const originalOptions = Array.from(selectElement.options).slice(1); // Skip first disabled option
+                let filteredOptions = [...originalOptions];
+                
+                // Hide original select
+                selectElement.style.display = 'none';
+                
+                // Insert wrapper after select
+                selectElement.parentNode.insertBefore(wrapper, selectElement.nextSibling);
+                wrapper.appendChild(input);
+                wrapper.appendChild(dropdown);
+                
+                // Fuzzy search function
+                function fuzzySearch(query, text) {
+                    const queryLower = query.toLowerCase();
+                    const textLower = text.toLowerCase();
+                    
+                    // Exact match gets highest priority
+                    if (textLower.includes(queryLower)) return true;
+                    
+                    // Character sequence matching
+                    let queryIndex = 0;
+                    for (let i = 0; i < textLower.length && queryIndex < queryLower.length; i++) {
+                        if (textLower[i] === queryLower[queryIndex]) {
+                            queryIndex++;
+                        }
+                    }
+                    return queryIndex === queryLower.length;
+                }
+                
+                // Render dropdown options
+                function renderOptions() {
+                    dropdown.innerHTML = '';
+                    
+                    if (filteredOptions.length === 0) {
+                        const noResults = document.createElement('div');
+                        noResults.className = 'dropdown-option no-results';
+                        noResults.textContent = 'No results found';
+                        dropdown.appendChild(noResults);
+                        return;
+                    }
+                    
+                    filteredOptions.forEach(option => {
+                        const optionDiv = document.createElement('div');
+                        optionDiv.className = 'dropdown-option';
+                        optionDiv.textContent = option.textContent;
+                        optionDiv.setAttribute('data-value', option.value);
+                        
+                        optionDiv.addEventListener('click', function() {
+                            selectElement.value = option.value;
+                            input.value = option.textContent;
+                            dropdown.classList.remove('open');
+                            
+                            // Trigger change event
+                            const changeEvent = new Event('change', { bubbles: true });
+                            selectElement.dispatchEvent(changeEvent);
+                        });
+                        
+                        dropdown.appendChild(optionDiv);
+                    });
+                }
+                
+                // Input event listener
+                input.addEventListener('input', function() {
+                    const query = this.value.trim();
+                    
+                    if (query === '') {
+                        filteredOptions = [...originalOptions];
+                    } else {
+                        filteredOptions = originalOptions.filter(option => 
+                            fuzzySearch(query, option.textContent)
+                        );
+                    }
+                    
+                    renderOptions();
+                    dropdown.classList.add('open');
+                });
+                
+                // Focus event
+                input.addEventListener('focus', function() {
+                    renderOptions();
+                    dropdown.classList.add('open');
+                });
+                
+                // Click outside to close
+                document.addEventListener('click', function(e) {
+                    if (!wrapper.contains(e.target)) {
+                        dropdown.classList.remove('open');
+                    }
+                });
+                
+                // Keyboard navigation
+                input.addEventListener('keydown', function(e) {
+                    const options = dropdown.querySelectorAll('.dropdown-option:not(.no-results)');
+                    let activeIndex = Array.from(options).findIndex(opt => opt.classList.contains('active'));
+                    
+                    switch(e.key) {
+                        case 'ArrowDown':
+                            e.preventDefault();
+                            if (activeIndex < options.length - 1) {
+                                if (activeIndex >= 0) options[activeIndex].classList.remove('active');
+                                options[activeIndex + 1].classList.add('active');
+                            }
+                            break;
+                            
+                        case 'ArrowUp':
+                            e.preventDefault();
+                            if (activeIndex > 0) {
+                                options[activeIndex].classList.remove('active');
+                                options[activeIndex - 1].classList.add('active');
+                            }
+                            break;
+                            
+                        case 'Enter':
+                            e.preventDefault();
+                            if (activeIndex >= 0) {
+                                options[activeIndex].click();
+                            }
+                            break;
+                            
+                        case 'Escape':
+                            dropdown.classList.remove('open');
+                            input.blur();
+                            break;
+                    }
+                });
+                
+                // Initial render
+                renderOptions();
+            }
+            
+            // Initialize searchable dropdowns after countries are populated
+            setTimeout(() => {
+                const nationalitySelect = document.getElementById('nationality');
+                const residenceSelect = document.getElementById('residence');
+                const motherTongueSelect = document.getElementById('mother-tone');
+                
+                if (nationalitySelect) createSearchableDropdown(nationalitySelect);
+                if (residenceSelect) createSearchableDropdown(residenceSelect);
+                if (motherTongueSelect) createSearchableDropdown(motherTongueSelect);
+            }, 100);
+            
             // Handle the "Other Diseases" dropdown selection to show/hide the "Other Medical History" field
             const medicalHistorySelect = document.getElementById('medical-history');
             const otherMedicalHistoryField = document.getElementById('other-medical-history').closest('.input-field');
