@@ -687,3 +687,29 @@
                 formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         });
+
+// Email validation function - accessible globally
+function validateEmail(input) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const errorId = input.id + '-error';
+    const errorElement = document.getElementById(errorId);
+    
+    // Remove existing styling
+    input.classList.remove('has-error');
+    if (errorElement) {
+        errorElement.classList.remove('visible');
+    }
+    
+    // If the field is empty, don't show error (will be caught by required attribute)
+    if (!input.value.trim()) return;
+    
+    // Validate email format
+    if (!emailRegex.test(input.value)) {
+        // Show error message
+        input.classList.add('has-error');
+        if (errorElement) {
+            errorElement.textContent = 'Please enter a valid email address';
+            errorElement.classList.add('visible');
+        }
+    }
+}
