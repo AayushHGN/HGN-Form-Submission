@@ -768,10 +768,8 @@
                                 age--;
                             }
                             
-                            if (age < 16) {
-                                errorMessage = 'You must be at least 16 years old to apply';
-                            } else if (age > 60) {
-                                errorMessage = 'You must be 60 years old or younger to apply';
+                            if (age < 16 || age > 60) {
+                                errorMessage = 'Your age is not covered by insurance (coverage: 16 to 60 years old, subject to the insured\'s age at the time of application)';
                             }
                         }
                     } else if (input.type === 'file') {
@@ -1010,16 +1008,10 @@ function validateAge(input) {
     }
     
     // Validate age range (16-60 years)
-    if (age < 16) {
+    if (age < 16 || age > 60) {
         input.classList.add('has-error');
         if (errorElement) {
-            errorElement.textContent = 'You must be at least 16 years old to apply';
-            errorElement.classList.add('visible');
-        }
-    } else if (age > 60) {
-        input.classList.add('has-error');
-        if (errorElement) {
-            errorElement.textContent = 'You must be 60 years old or younger to apply';
+            errorElement.textContent = 'Your age is not covered by insurance (coverage: 16 to 60 years old, subject to the insured\'s age at the time of application)';
             errorElement.classList.add('visible');
         }
     }
