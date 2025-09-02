@@ -56,19 +56,15 @@
                         </div>
                         
                         <div class="input-field">
-                            <label for="phone">Phone <span class="required">*</span></label>
-                            <input type="tel" id="phone" name="phone" required>
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone">
                         </div>
                         
                         <div class="input-field">
                             <label for="nationality">Nationality <span class="required">*</span></label>
                             <select id="nationality" name="nationality" required>
                                 <option value="" disabled selected>Select your nationality</option>
-                                <option value="us">United States</option>
-                                <option value="uk">United Kingdom</option>
-                                <option value="ca">Canada</option>
-                                <option value="au">Australia</option>
-                                <option value="other">Other</option>
+                                <!-- All countries will be populated via JavaScript -->
                             </select>
                         </div>
                         
@@ -76,17 +72,123 @@
                             <label for="residence">Country of Residence <span class="required">*</span></label>
                             <select id="residence" name="residence" required>
                                 <option value="" disabled selected>Select your country</option>
-                                <option value="us">United States</option>
-                                <option value="uk">United Kingdom</option>
-                                <option value="ca">Canada</option>
-                                <option value="au">Australia</option>
-                                <option value="other">Other</option>
+                                <!-- All countries will be populated via JavaScript -->
                             </select>
                         </div>
                         
                         <div class="input-field">
                             <label for="mother-tongue">Mother Tongue</label>
-                            <input type="text" id="mother-tongue" name="mother-tongue">
+                            <select id="mother-tongue" name="mother-tongue">
+                                <option value="" selected>Select language</option>
+                                <option value="afrikaans">Afrikaans</option>
+                                <option value="albanian">Albanian</option>
+                                <option value="amharic">Amharic</option>
+                                <option value="arabic">Arabic</option>
+                                <option value="armenian">Armenian</option>
+                                <option value="assamese">Assamese</option>
+                                <option value="azerbaijani">Azerbaijani</option>
+                                <option value="basque">Basque</option>
+                                <option value="belarusian">Belarusian</option>
+                                <option value="bengali">Bengali</option>
+                                <option value="bosnian">Bosnian</option>
+                                <option value="bulgarian">Bulgarian</option>
+                                <option value="burmese">Burmese</option>
+                                <option value="catalan">Catalan</option>
+                                <option value="cebuano">Cebuano</option>
+                                <option value="chichewa">Chichewa</option>
+                                <option value="chinese">Chinese (Mandarin)</option>
+                                <option value="corsican">Corsican</option>
+                                <option value="croatian">Croatian</option>
+                                <option value="czech">Czech</option>
+                                <option value="danish">Danish</option>
+                                <option value="dutch">Dutch</option>
+                                <option value="english">English</option>
+                                <option value="esperanto">Esperanto</option>
+                                <option value="estonian">Estonian</option>
+                                <option value="filipino">Filipino</option>
+                                <option value="finnish">Finnish</option>
+                                <option value="french">French</option>
+                                <option value="frisian">Frisian</option>
+                                <option value="galician">Galician</option>
+                                <option value="georgian">Georgian</option>
+                                <option value="german">German</option>
+                                <option value="greek">Greek</option>
+                                <option value="gujarati">Gujarati</option>
+                                <option value="haitian">Haitian Creole</option>
+                                <option value="hausa">Hausa</option>
+                                <option value="hawaiian">Hawaiian</option>
+                                <option value="hebrew">Hebrew</option>
+                                <option value="hindi">Hindi</option>
+                                <option value="hmong">Hmong</option>
+                                <option value="hungarian">Hungarian</option>
+                                <option value="icelandic">Icelandic</option>
+                                <option value="igbo">Igbo</option>
+                                <option value="indonesian">Indonesian</option>
+                                <option value="irish">Irish</option>
+                                <option value="italian">Italian</option>
+                                <option value="japanese">Japanese</option>
+                                <option value="javanese">Javanese</option>
+                                <option value="kannada">Kannada</option>
+                                <option value="kazakh">Kazakh</option>
+                                <option value="khmer">Khmer</option>
+                                <option value="korean">Korean</option>
+                                <option value="kurdish">Kurdish</option>
+                                <option value="kyrgyz">Kyrgyz</option>
+                                <option value="lao">Lao</option>
+                                <option value="latin">Latin</option>
+                                <option value="latvian">Latvian</option>
+                                <option value="lithuanian">Lithuanian</option>
+                                <option value="luxembourgish">Luxembourgish</option>
+                                <option value="macedonian">Macedonian</option>
+                                <option value="malagasy">Malagasy</option>
+                                <option value="malay">Malay</option>
+                                <option value="malayalam">Malayalam</option>
+                                <option value="maltese">Maltese</option>
+                                <option value="maori">Maori</option>
+                                <option value="marathi">Marathi</option>
+                                <option value="mongolian">Mongolian</option>
+                                <option value="myanmar">Myanmar (Burmese)</option>
+                                <option value="nepali">Nepali</option>
+                                <option value="norwegian">Norwegian</option>
+                                <option value="odia">Odia (Oriya)</option>
+                                <option value="pashto">Pashto</option>
+                                <option value="persian">Persian</option>
+                                <option value="polish">Polish</option>
+                                <option value="portuguese">Portuguese</option>
+                                <option value="punjabi">Punjabi</option>
+                                <option value="romanian">Romanian</option>
+                                <option value="russian">Russian</option>
+                                <option value="samoan">Samoan</option>
+                                <option value="scots_gaelic">Scots Gaelic</option>
+                                <option value="serbian">Serbian</option>
+                                <option value="sesotho">Sesotho</option>
+                                <option value="shona">Shona</option>
+                                <option value="sindhi">Sindhi</option>
+                                <option value="sinhala">Sinhala</option>
+                                <option value="slovak">Slovak</option>
+                                <option value="slovenian">Slovenian</option>
+                                <option value="somali">Somali</option>
+                                <option value="spanish">Spanish</option>
+                                <option value="sundanese">Sundanese</option>
+                                <option value="swahili">Swahili</option>
+                                <option value="swedish">Swedish</option>
+                                <option value="tajik">Tajik</option>
+                                <option value="tamil">Tamil</option>
+                                <option value="telugu">Telugu</option>
+                                <option value="thai">Thai</option>
+                                <option value="turkish">Turkish</option>
+                                <option value="turkmen">Turkmen</option>
+                                <option value="ukrainian">Ukrainian</option>
+                                <option value="urdu">Urdu</option>
+                                <option value="uyghur">Uyghur</option>
+                                <option value="uzbek">Uzbek</option>
+                                <option value="vietnamese">Vietnamese</option>
+                                <option value="welsh">Welsh</option>
+                                <option value="xhosa">Xhosa</option>
+                                <option value="yiddish">Yiddish</option>
+                                <option value="yoruba">Yoruba</option>
+                                <option value="zulu">Zulu</option>
+                            </select>
                         </div>
                         
                         <div class="input-field">
@@ -106,18 +208,20 @@
                                 <option value="ab-">AB-</option>
                                 <option value="o+">O+</option>
                                 <option value="o-">O-</option>
+                                <option value="unknown">Unknown</option>
                             </select>
                         </div>
                         
                         <div class="input-field">
-                            <label for="english-service">English Service Needed</label>
+                            <label for="english-service">English Service</label>
                             <select id="english-service" name="english-service">
-                                <option value="" disabled selected>Select English service preference</option>
-                                <option value="required">Required</option>
-                                <option value="preferred">Preferred</option>
-                                <option value="optional">Optional</option>
+                                <option value="" disabled selected>Select option</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
                             </select>
                         </div>
+                        
+
                     </div>
 
                     <!-- Medical Information -->
@@ -125,8 +229,18 @@
                         <h2>Medical Information</h2>
                         
                         <div class="input-field">
-                            <label for="emergency-contact">Emergency Contact <span class="required">*</span></label>
-                            <input type="tel" id="emergency-contact" name="emergency-contact" required>
+                            <label for="emergency-contact-name">Emergency Contact Name <span class="required">*</span></label>
+                            <input type="text" id="emergency-contact-name" name="emergency-contact-name" required>
+                        </div>
+                        
+                        <div class="input-field">
+                            <label for="emergency-tel">Emergency Tel.</label>
+                            <input type="tel" id="emergency-tel" name="emergency-tel">
+                        </div>
+                        
+                        <div class="input-field">
+                            <label for="emergency-email">Emergency Email <span class="required">*</span></label>
+                            <input type="email" id="emergency-email" name="emergency-email" required>
                         </div>
                         
                         <div class="input-field">
@@ -139,24 +253,40 @@
                             <input type="number" id="weight" name="weight" min="0" placeholder="Your weight in kilograms">
                         </div>
                         
-                        <div class="input-field full-width">
+                        <div class="input-field">
                             <label for="medical-history">Medical History</label>
-                            <textarea id="medical-history" name="medical-history" rows="3" placeholder="Please provide any relevant medical history"></textarea>
+                            <select id="medical-history" name="medical-history">
+                                <option value="" selected>Select medical condition</option>
+                                <option value="cancer">Cancer</option>
+                                <option value="hypertension">Hypertension</option>
+                                <option value="hyperglycemia">Hyperglycemia</option>
+                                <option value="cardiovascular">Cardiovascular Disease</option>
+                                <option value="cerebrovascular">Cerebrovascular Disease</option>
+                                <option value="nervous">Nervous System and Mental Diseases</option>
+                                <option value="kidney">Kidney Diseases</option>
+                                <option value="digestive">Digestive System Diseases</option>
+                                <option value="blood">Blood Diseases</option>
+                                <option value="rheumatic">Rheumatic and Immunological Diseases</option>
+                                <option value="respiratory">Respiratory System Diseases</option>
+                                <option value="orthopedic">Orthopedic and Surgical Diseases</option>
+                                <option value="pregnant">Pregnant Female</option>
+                                <option value="other">Other Diseases</option>
+                            </select>
                         </div>
                         
                         <div class="input-field full-width">
-                            <label for="other">Other Medical Information</label>
-                            <textarea id="other" name="other" rows="2" placeholder="Any other medical information we should be aware of"></textarea>
+                            <label for="other-medical-history">Other Medical History</label>
+                            <textarea id="other-medical-history" name="other-medical-history" rows="2" placeholder="Please specify if you selected 'Other Diseases' above"></textarea>
                         </div>
                         
                         <div class="input-field full-width">
-                            <label for="allergy">Allergies</label>
+                            <label for="allergy">Allergy</label>
                             <textarea id="allergy" name="allergy" rows="2" placeholder="List any allergies you have"></textarea>
                         </div>
                         
                         <div class="input-field full-width">
-                            <label for="medicines">Current Medications</label>
-                            <textarea id="medicines" name="medicines" rows="2" placeholder="List any medications you are currently taking"></textarea>
+                            <label for="constrained-medicines">Constrained Medicines</label>
+                            <textarea id="constrained-medicines" name="constrained-medicines" rows="2" placeholder="List any medications you cannot take"></textarea>
                         </div>
                     </div>
 
@@ -164,20 +294,11 @@
                     <div class="form-section full-width">
                         <h2>Document Upload</h2>
                         <div class="upload-grid">
-                                <div class="upload-field">
-                                <label for="passport-upload">Passport Copy <span class="required">*</span></label>
+                            <div class="upload-field">
+                                <label for="passport-id-photo">Passport/ID Photo <span class="required">*</span></label>
                                 <div class="file-upload">
-                                    <input type="file" id="passport-upload" name="passport-upload" accept=".jpg,.jpeg,.png,.pdf" required>
-                                    <label for="passport-upload" class="file-label">
-                                        <i class="fas fa-plus"></i>
-                                    </label>
-                                    <div class="file-name">No file chosen</div>
-                                </div>
-                            </div>                            <div class="upload-field">
-                                <label for="visa-upload">Visa Copy</label>
-                                <div class="file-upload">
-                                    <input type="file" id="visa-upload" name="visa-upload" accept=".jpg,.jpeg,.png,.pdf">
-                                    <label for="visa-upload" class="file-label">
+                                    <input type="file" id="passport-id-photo" name="passport-id-photo" accept=".jpg,.jpeg,.png,.pdf" required>
+                                    <label for="passport-id-photo" class="file-label">
                                         <i class="fas fa-plus"></i>
                                     </label>
                                     <div class="file-name">No file chosen</div>
@@ -185,10 +306,21 @@
                             </div>
                             
                             <div class="upload-field">
-                                <label for="avatar-upload">Avatar Photo <span class="required">*</span></label>
+                                <label for="visa-validity">Visa/ID validity period <span class="required">*</span></label>
                                 <div class="file-upload">
-                                    <input type="file" id="avatar-upload" name="avatar-upload" accept=".jpg,.jpeg,.png" required>
-                                    <label for="avatar-upload" class="file-label">
+                                    <input type="file" id="visa-validity" name="visa-validity" accept=".jpg,.jpeg,.png,.pdf" required>
+                                    <label for="visa-validity" class="file-label">
+                                        <i class="fas fa-plus"></i>
+                                    </label>
+                                    <div class="file-name">No file chosen</div>
+                                </div>
+                            </div>
+                            
+                            <div class="upload-field">
+                                <label for="tourist-avatar">Tourist Avatar</label>
+                                <div class="file-upload">
+                                    <input type="file" id="tourist-avatar" name="tourist-avatar" accept=".jpg,.jpeg,.png">
+                                    <label for="tourist-avatar" class="file-label">
                                         <i class="fas fa-plus"></i>
                                     </label>
                                     <div class="file-name">No file chosen</div>
@@ -224,7 +356,7 @@
                         <span class="close-modal">&times;</span>
                     </div>
                     <div class="modal-body">
-                        <canvas id="signatureCanvas" width="500" height="200"></canvas>
+                        <canvas id="signatureCanvas" width="600" height="300"></canvas>
                         <div class="signature-actions">
                             <button id="clearSignature" class="btn btn-outline"><i class="fas fa-eraser"></i> Clear</button>
                             <button id="undoSignature" class="btn btn-outline"><i class="fas fa-undo"></i> Undo</button>

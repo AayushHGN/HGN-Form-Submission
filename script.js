@@ -26,6 +26,89 @@
                 });
             }
             
+            // Populate country dropdowns with all countries
+            function populateCountryDropdowns() {
+                const countries = [
+                    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", 
+                    "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", 
+                    "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", 
+                    "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", 
+                    "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", 
+                    "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", 
+                    "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", 
+                    "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", 
+                    "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast", 
+                    "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kosovo", "Kuwait", 
+                    "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", 
+                    "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", 
+                    "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", 
+                    "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", 
+                    "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", 
+                    "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", 
+                    "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", 
+                    "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", 
+                    "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", 
+                    "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", 
+                    "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", 
+                    "Yemen", "Zambia", "Zimbabwe"
+                ];
+                
+                // Find all country selects
+                const nationalitySelect = document.getElementById('nationality');
+                const residenceSelect = document.getElementById('residence');
+                
+                if (nationalitySelect) {
+                    // Clear existing options (keeping only the default)
+                    const defaultOption = nationalitySelect.querySelector('option[disabled]');
+                    nationalitySelect.innerHTML = '';
+                    if (defaultOption) {
+                        nationalitySelect.appendChild(defaultOption);
+                    }
+                    
+                    // Add all countries
+                    countries.forEach(country => {
+                        const option = document.createElement('option');
+                        option.value = country.toLowerCase().replace(/\s+/g, '-');
+                        option.textContent = country;
+                        nationalitySelect.appendChild(option);
+                    });
+                }
+                
+                if (residenceSelect) {
+                    // Clear existing options (keeping only the default)
+                    const defaultOption = residenceSelect.querySelector('option[disabled]');
+                    residenceSelect.innerHTML = '';
+                    if (defaultOption) {
+                        residenceSelect.appendChild(defaultOption);
+                    }
+                    
+                    // Add all countries
+                    countries.forEach(country => {
+                        const option = document.createElement('option');
+                        option.value = country.toLowerCase().replace(/\s+/g, '-');
+                        option.textContent = country;
+                        residenceSelect.appendChild(option);
+                    });
+                }
+            }
+            
+            // Call the function to populate countries
+            populateCountryDropdowns();
+            
+            // Handle the "Other Diseases" dropdown selection to show/hide the "Other Medical History" field
+            const medicalHistorySelect = document.getElementById('medical-history');
+            const otherMedicalHistoryField = document.getElementById('other-medical-history').closest('.input-field');
+            
+            if (medicalHistorySelect && otherMedicalHistoryField) {
+                // Initially hide the Other Medical History field if Other Diseases is not selected
+                otherMedicalHistoryField.style.display = medicalHistorySelect.value === 'other' ? 'block' : 'none';
+                
+                // Add event listener for dropdown change
+                medicalHistorySelect.addEventListener('change', function() {
+                    otherMedicalHistoryField.style.display = this.value === 'other' ? 'block' : 'none';
+                });
+            }
+            
             // File input handling is now managed by mobile-fixes.js
             // We're not setting any capture attributes here to ensure proper mobile behavior
             
