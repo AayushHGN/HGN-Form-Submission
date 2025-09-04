@@ -10,6 +10,9 @@
             const submitBtn = form.querySelector('.submit-btn');
             const formGrid = document.getElementById('formGrid');
             
+            // Initialize API service
+            const apiService = new CTGAPIService();
+            
             // Add staggered animations to form sections
             if (formGrid) {
                 const formSections = formGrid.querySelectorAll('.form-section');
@@ -26,8 +29,57 @@
                 });
             }
             
-            // Populate country dropdowns with all countries
-            function populateCountryDropdowns() {
+            // Initialize form data by loading from APIs
+            async function initializeFormData() {
+                try {
+                    // Show loading indicator
+                    showFormMessage('Loading form data...', 'info');
+                    
+                    // Load all form data from APIs
+                    await apiService.initializeFormData();
+                    
+                    // Initialize searchable dropdowns after API data is loaded
+                    initializeSearchableDropdowns();
+                    
+                    // Hide loading message
+                    hideFormMessage();
+                    
+                    console.log('Form initialized successfully with API data');
+                } catch (error) {
+                    console.error('Error loading form data:', error);
+                    showFormMessage('Error loading form data. Some options may not be available.', 'error');
+                    
+                    // Fallback to basic country list if API fails
+                    populateCountryDropdownsFallback();
+                }
+            }
+            
+            // Function to initialize searchable dropdowns
+            function initializeSearchableDropdowns() {
+                console.log('Initializing searchable dropdowns...');
+                
+                const nationalitySelect = document.getElementById('nationality');
+                const residenceSelect = document.getElementById('residence');
+                const motherTongueSelect = document.getElementById('mother-tone');
+                
+                if (nationalitySelect) {
+                    console.log('Creating searchable dropdown for nationality');
+                    createSearchableDropdown(nationalitySelect);
+                }
+                if (residenceSelect) {
+                    console.log('Creating searchable dropdown for residence');
+                    createSearchableDropdown(residenceSelect);
+                }
+                if (motherTongueSelect) {
+                    console.log('Creating searchable dropdown for mother-tone');
+                    createSearchableDropdown(motherTongueSelect);
+                }
+                
+                console.log('Searchable dropdowns initialized');
+            }
+            
+            // Fallback function for countries if API fails
+            function populateCountryDropdownsFallback() {
                 const countries = [
                     "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", 
                     "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", 
@@ -92,8 +144,8 @@
                 }
             }
             
-            // Call the function to populate countries
-            populateCountryDropdowns();
+            // Call the function to initialize form data
+            initializeFormData();
             
             // Fuzzy Search Dropdown Implementation
             function createSearchableDropdown(selectElement) {
@@ -239,17 +291,6 @@
                 // Initial render
                 renderOptions();
             }
-            
-            // Initialize searchable dropdowns after countries are populated
-            setTimeout(() => {
-                const nationalitySelect = document.getElementById('nationality');
-                const residenceSelect = document.getElementById('residence');
-                const motherTongueSelect = document.getElementById('mother-tone');
-                
-                if (nationalitySelect) createSearchableDropdown(nationalitySelect);
-                if (residenceSelect) createSearchableDropdown(residenceSelect);
-                if (motherTongueSelect) createSearchableDropdown(motherTongueSelect);
-            }, 100);
             
             // Handle the "Other Diseases" dropdown selection to show/hide the "Other Medical History" field
             const medicalHistorySelect = document.getElementById('medical-history');
@@ -629,7 +670,7 @@
             
             // Add form submission handling with validation
             if (form) {
-                form.addEventListener('submit', function(e) {
+                form.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     
                     // Reset previous validation states
@@ -643,26 +684,147 @@
                         submitBtn.classList.add('loading');
                         submitBtn.textContent = 'Processing...';
                         
-                        // Simulate form submission (replace with actual API call)
-                        setTimeout(() => {
+                        try {
+                            // Get form data
+                            const formData = new FormData(form);
+                            
+                            // Handle file uploads first
+                            showFormMessage('Uploading files...', 'info');
+                            const uploadedFiles = await handleFileUploads(formData);
+                            
+                            // Prepare data for API submission
+                            showFormMessage('Submitting registration...', 'info');
+                            const apiData = apiService.mapFormDataToAPI(formData, uploadedFiles);
+                            
+                            // Submit to API
+                            console.log('Submitting to API with data:', apiData);
+                            const result = await apiService.submitTouristData(apiData);
+                            console.log('API submission result:', result);
+                            
+                            if (!result) {
+                                throw new Error('No response received from the API');
+                            }
+                            
+                            // Check if the API call was successful first
+                            if (!result.success) {
+                                showFormMessage(`Submission error: ${result.message || 'Unknown error'}`, 'error');
+                                return;
+                            }
+                            
+                            // Handle response
+                            const interpretation = apiService.interpretResponseCode(result.code);
+                            console.log('Response interpretation:', interpretation);
+                            
+                            if (interpretation.success) {
+                                // Hide the form and show success message
+                                const formGrid = document.getElementById('formGrid');
+                                const formFooter = document.querySelector('.form-footer');
+                                
+                                if (formGrid) formGrid.style.display = 'none';
+                                if (formFooter) formFooter.style.display = 'none';
+                                
+                                // Create enhanced success message
+                                createEnhancedSuccessMessage();
+                            } else {
+                                showFormMessage(interpretation.message, 'error');
+                            }
+                            
+                        } catch (error) {
+                            console.error('Submission error:', error);
+                            console.error('Error details:', {
+                                name: error.name,
+                                message: error.message,
+                                stack: error.stack
+                            });
+                            
+                            // Show a more specific error message
+                            if (error.message.includes('Failed to fetch')) {
+                                showFormMessage('Network error. Please check your connection and try again.', 'error');
+                            } else if (error.message.includes('HTTP')) {
+                                showFormMessage(`Server error: ${error.message}`, 'error');
+                            } else {
+                                showFormMessage('Submission failed. Please check your connection and try again.', 'error');
+                            }
+                        } finally {
                             // Reset button state
                             submitBtn.classList.remove('loading');
                             submitBtn.textContent = 'Submit Application';
-                            
-                            // Hide the form and show success message
-                            const formGrid = document.getElementById('formGrid');
-                            const formFooter = document.querySelector('.form-footer');
-                            
-                            if (formGrid) formGrid.style.display = 'none';
-                            if (formFooter) formFooter.style.display = 'none';
-                            
-                            // Create enhanced success message
-                            createEnhancedSuccessMessage();
-                        }, 1500);
+                        }
                     } else {
                         showFormMessage('Please fill in all required fields correctly.', 'error');
                     }
                 });
+            }
+            
+            // Function to handle file uploads
+            async function handleFileUploads(formData) {
+                const uploadedFiles = {};
+                const fileFields = [
+                    { name: 'passport-id-photo', key: 'passportPhoto' },
+                    { name: 'visa-validity', key: 'visaPhoto' },
+                    { name: 'tourist-avatar', key: 'profilePhoto' },
+                    { name: 'signature-upload', key: 'signature' }
+                ];
+                
+                // Handle signature canvas data if it exists and no file upload
+                const signatureUploadInput = document.querySelector('input[name="signature-upload"]');
+                const hasSignatureFile = signatureUploadInput && signatureUploadInput.files && signatureUploadInput.files[0];
+                
+                if (!hasSignatureFile) {
+                    const signatureDataUrl = getSignatureDataUrl();
+                    if (signatureDataUrl) {
+                        try {
+                            const signatureFile = dataURLtoFile(signatureDataUrl, 'signature.png');
+                            const signatureResult = await apiService.uploadFile(signatureFile);
+                            uploadedFiles.signature = JSON.stringify([signatureResult]);
+                        } catch (error) {
+                            console.error('Error uploading signature canvas:', error);
+                            uploadedFiles.signature = '[]';
+                        }
+                    } else {
+                        uploadedFiles.signature = '[]';
+                    }
+                }
+                
+                // Handle all file uploads
+                for (const field of fileFields) {
+                    const fileInput = document.querySelector(`input[name="${field.name}"]`);
+                    if (fileInput && fileInput.files && fileInput.files[0]) {
+                        try {
+                            const uploadResult = await apiService.uploadFile(fileInput.files[0]);
+                            uploadedFiles[field.key] = JSON.stringify([uploadResult]);
+                        } catch (error) {
+                            console.error(`Error uploading ${field.name}:`, error);
+                            uploadedFiles[field.key] = '[]';
+                        }
+                    } else if (!uploadedFiles[field.key]) {
+                        uploadedFiles[field.key] = '[]';
+                    }
+                }
+                
+                return uploadedFiles;
+            }
+            
+            // Helper function to convert data URL to File
+            function dataURLtoFile(dataurl, filename) {
+                const arr = dataurl.split(',');
+                const mime = arr[0].match(/:(.*?);/)[1];
+                const bstr = atob(arr[1]);
+                let n = bstr.length;
+                const u8arr = new Uint8Array(n);
+                while (n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                return new File([u8arr], filename, { type: mime });
+            }
+            
+            // Helper function to get signature as data URL
+            function getSignatureDataUrl() {
+                const canvas = document.getElementById('signatureCanvas');
+                if (canvas && signaturePaths && signaturePaths.length > 0) {
+                    return canvas.toDataURL('image/png');
+                }
+                return null;
             }
             
             // Function to validate the form
@@ -671,6 +833,33 @@
                 const requiredInputs = form.querySelectorAll('input[required], select[required], textarea[required]');
                 
                 requiredInputs.forEach(input => {
+                    // Skip validation for hidden select elements that have searchable dropdown replacements
+                    if (input.tagName === 'SELECT' && input.style.display === 'none') {
+                        // Check if there's a corresponding searchable input with a value
+                        const wrapper = input.parentNode.querySelector('.searchable-dropdown');
+                        if (wrapper) {
+                            const searchableInput = wrapper.querySelector('.searchable-input');
+                            if (searchableInput && searchableInput.value.trim()) {
+                                // The searchable input has a value, so the select should too
+                                if (!input.value) {
+                                    // Find the option that matches the searchable input value
+                                    const matchingOption = Array.from(input.options).find(option => 
+                                        option.textContent === searchableInput.value.trim()
+                                    );
+                                    if (matchingOption) {
+                                        input.value = matchingOption.value;
+                                    }
+                                }
+                                return; // Skip further validation for this element
+                            } else {
+                                // Searchable input is empty, mark as invalid
+                                markAsInvalid(input);
+                                isValid = false;
+                                return;
+                            }
+                        }
+                    }
+                    
                     if (!input.value.trim()) {
                         markAsInvalid(input);
                         isValid = false;
@@ -826,6 +1015,14 @@
                 
                 // Scroll to the message
                 formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            // Hide form message
+            function hideFormMessage() {
+                const formMessage = document.querySelector('.form-message');
+                if (formMessage) {
+                    formMessage.style.display = 'none';
+                }
             }
         });
 
